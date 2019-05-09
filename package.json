@@ -26,7 +26,9 @@
   ],
   "author": "Arturas Chramcenko",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "wix-style-processor": "^3.1.10"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "jest": "^24.5.0",
