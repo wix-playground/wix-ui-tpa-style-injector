@@ -13,11 +13,11 @@ export class StyleInjector implements IStyleInjector {
   private styleSheetHandler: IStylesheetHandler
   constructor(
     private readonly document: Document,
-    private readonly wixSdk: any,
-    private readonly componentHash: string,
+    // private readonly wixSdk: any,
+    private readonly componentHash: string, // hash props here locally
   ) {
-    const compId = this.wixSdk.Utils.getCompId() // compId as app level scoping/hash
-    this.styleSheetHandler = new StylesheetHandler(this.document, `${compId}-${this.componentHash}`)
+    // const compId = this.wixSdk.Utils.getCompId() // compId as app level scoping/hash
+    this.styleSheetHandler = new StylesheetHandler(this.document, this.componentHash)
   }
 
   public addInitialCss(stylesheetContent: string): Promise < void > {
@@ -36,7 +36,7 @@ export class StyleInjector implements IStyleInjector {
   ): void {
     const rulesToInject = this.createCssRules(componentProps, componentVariables, resolvedStyles)
     rulesToInject.forEach((rule: ICssInjection) => {
-      this.styleSheetHandler.insertRule(rule.selector, rule.cssContent, 'variable-styles', rule.mediaQuery)
+      this.styleSheetHandler.insertRule(rule.selector, rule.cssContent, rule.mediaQuery)
     })
   }
 
@@ -85,7 +85,7 @@ export interface IComponentVariables {
  * IVariableStructure
  */
 export interface IVariableStructure {
-  mediaQuery?: string
+  mediaQuery ?: string
   selector: string
   declaration: string
 }
@@ -102,7 +102,5 @@ export interface IVariableMap {
 export interface ICssInjection {
   selector: string
   cssContent: string
-  mediaQuery?: string
+  mediaQuery ?: string
 }
-
-export default StyleInjector

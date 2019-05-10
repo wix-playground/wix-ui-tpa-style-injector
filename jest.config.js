@@ -17,7 +17,7 @@ module.exports = {
 			"branches": 100,
 			"functions": 50,
 			"lines": 75,
-			"statements": 75
+			"statements": 35
 		}
 	},
 	"collectCoverageFrom": [

@@ -3,10 +3,11 @@
  */
 export class StylesheetHandler implements IStylesheetHandler {
   private ruleIndices: IRuleIndices = {}
-  constructor(private document: Document, private stylesheetHash: string) {}
+  constructor(private document: Document, private componentHash: string) {}
 
-  public insertRule(selector: string, styleToSet: string, styleSheetId: string, mediaQuery ? : string) {
-    const styleTagId = `${this.stylesheetHash}-${styleSheetId}`
+  public insertRule(originalSelector: string, styleToSet: string, mediaQuery ? : string) {
+    const selector = `.${this.componentHash}${originalSelector}`
+    const styleTagId = `${this.componentHash}`
     let styleTag: HTMLStyleElement =
       (this.document.getElementById(styleTagId) as HTMLStyleElement) || undefined
     if (!styleTag) {
@@ -25,7 +26,7 @@ export class StylesheetHandler implements IStylesheetHandler {
   public createTagWithContent(cssContent: string) {
     const style = this.document.createElement('style')
     style.type = 'text/css'
-    style.id = `${this.stylesheetHash}-default-style`
+    style.id = `${this.componentHash}-default-style`
     style.textContent = cssContent
     this.document.head.appendChild(style)
   }
@@ -86,7 +87,7 @@ export class StylesheetHandler implements IStylesheetHandler {
  * IStylesheetHandler
  */
 export interface IStylesheetHandler {
-  insertRule(selector: string, styleToSet: string, styleSheetId: string, mediaQuery ? : string): void
+  insertRule(selector: string, styleToSet: string, mediaQuery ? : string): void
   createFragment(css: string): DocumentFragment
   createTagWithContent(cssContent: string): void
 }
